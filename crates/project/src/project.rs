@@ -133,7 +133,7 @@ pub const SERVER_PROGRESS_DEBOUNCE_TIMEOUT: Duration = Duration::from_millis(100
 
 const MAX_PROJECT_SEARCH_HISTORY_SIZE: usize = 500;
 
-pub trait Item {
+pub trait ProjectItem {
     fn try_open(
         project: &Model<Project>,
         path: &ProjectPath,
@@ -143,6 +143,7 @@ pub trait Item {
         Self: Sized;
     fn entry_id(&self, cx: &AppContext) -> Option<ProjectEntryId>;
     fn project_path(&self, cx: &AppContext) -> Option<ProjectPath>;
+    fn is_dirty(&self) -> bool;
 }
 
 #[derive(Clone)]
@@ -11336,7 +11337,7 @@ fn resolve_path(base: &Path, path: &Path) -> PathBuf {
     result
 }
 
-impl Item for Buffer {
+impl ProjectItem for Buffer {
     fn try_open(
         project: &Model<Project>,
         path: &ProjectPath,
@@ -11344,7 +11345,6 @@ impl Item for Buffer {
     ) -> Option<Task<Result<Model<Self>>>> {
         Some(project.update(cx, |project, cx| project.open_buffer(path.clone(), cx)))
     }
-
     fn entry_id(&self, cx: &AppContext) -> Option<ProjectEntryId> {
         File::from_dyn(self.file()).and_then(|file| file.project_entry_id(cx))
     }
@@ -11354,6 +11354,10 @@ impl Item for Buffer {
             worktree_id: file.worktree_id(cx),
             path: file.path().clone(),
         })
+    }
+
+    fn is_dirty(&self) -> bool {
+        self.is_dirty()
     }
 }
 

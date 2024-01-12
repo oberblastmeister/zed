@@ -22,7 +22,7 @@ pub struct ImageItem {
     project_path: ProjectPath,
 }
 
-impl project::Item for ImageItem {
+impl project::ProjectItem for ImageItem {
     fn try_open(
         project: &Model<Project>,
         path: &ProjectPath,
@@ -61,6 +61,10 @@ impl project::Item for ImageItem {
 
     fn project_path(&self, _: &AppContext) -> Option<ProjectPath> {
         Some(self.project_path.clone())
+    }
+
+    fn is_dirty(&self) -> bool {
+        false
     }
 }
 

@@ -105,7 +105,7 @@ use ordered_float::OrderedFloat;
 use parking_lot::{Mutex, RwLock};
 use project::project_settings::{GitGutterSetting, ProjectSettings};
 use project::{
-    CodeAction, Completion, FormatTrigger, Item, Location, Project, ProjectPath,
+    CodeAction, Completion, FormatTrigger, ProjectItem, Location, Project, ProjectPath,
     ProjectTransaction, TaskSourceKind, WorktreeId,
 };
 use rand::prelude::*;
