@@ -23,7 +23,8 @@ futures.workspace = true
 language.workspace = true
 log.workspace = true
 project.workspace = true
-runtimelib = "0.10.0"
+# runtimelib = "0.10.0"
+runtimelib = { path = "../../../../runtimed/runtimed/runtimelib"}
 serde.workspace = true
 serde_json.workspace = true
 settings.workspace = true
