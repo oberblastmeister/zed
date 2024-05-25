@@ -13,10 +13,6 @@ repository = "https://github.com/zed-industries/zed"
 name = "Haskell Language Server"
 language = "Haskell"
 
-[language_servers.static-ls]
-name = "Static Language Server"
-language = "Haskell"
-
 [grammars.haskell]
 repository = "https://github.com/tree-sitter/tree-sitter-haskell"
 commit = "8a99848fc734f9c4ea523b3f2a07df133cbbcec2"
