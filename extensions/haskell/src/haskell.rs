@@ -27,6 +27,7 @@ impl zed::Extension for HaskellExtension {
         match language_server_id.as_ref() {
             Hls::LANGUAGE_SERVER_ID => {
                 let _hls = self.hls.get_or_insert_with(|| Hls::new());
+                let env = worktree.shell_env();
                 let path = worktree
                     .which("haskell-language-server-wrapper")
                     .ok_or_else(|| "hls must be installed via ghcup".to_string())?;
@@ -34,18 +35,19 @@ impl zed::Extension for HaskellExtension {
                 Ok(zed::Command {
                     command: path,
                     args: vec!["lsp".to_string()],
-                    env: Default::default(),
+                    env,
                 })
             }
             StaticLs::LANGUAGE_SERVER_ID => {
                 let _static_ls = self.static_ls.get_or_insert_with(|| StaticLs::new());
+                let env = worktree.shell_env();
                 let path = worktree
                     .which("static-ls")
                     .ok_or_else(|| "static-ls could not be found")?;
                 Ok(zed::Command {
                     command: path,
                     args: vec![],
-                    env: Default::default(),
+                    env,
                 })
             }
             language_server_id => Err(format!("unknown language server: {language_server_id}")),
